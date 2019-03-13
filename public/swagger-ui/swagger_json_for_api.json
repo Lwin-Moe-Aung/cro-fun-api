@@ -1,0 +1,182 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Crowdfunding API",
+    "version": "1.0.0",
+    "title": "Crowdfunding API",
+    "contact": {
+      "email": "waiphyo@global-connect.asia"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "paths": {
+    "/oauth/token": {
+      "post": {
+        "summary": "request token from Application",
+        "operationId": "requestToken",
+        "description": "Requesting access token from Judgify API.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "grant_type",
+            "description": "Value to pass 'password'",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "client_id",
+            "description": "Client ID of the application",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "client_secret",
+            "description": "Client Secret of the application",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "username",
+            "description": "username/email address to log in to Judgify",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "description": "password to log in to Judgify",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "scope",
+            "description": "value to pass '*'",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User information associated with given token",
+            "schema": {
+              "$ref": "#/definitions/accessToken"
+            }
+          }
+        }
+      }
+    },
+    "/borrower/create": {
+      "post": {
+        "summary": "create borrower via API call",
+        "operationId": "createBorrower",
+        "description": "create borrower via API call",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "name",
+            "description": "Name of the borrower",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "nrc",
+            "description": "NRC of the borrower",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "dob",
+            "description": "DOB of the borrower in \"dd/MM/YYYY\" format.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "address",
+            "description": "Address of the borrower.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "photo",
+            "description": "Photo of the borrower.",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "field_officer_id",
+            "description": "ID of the field officer who register the borrower.",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response for borrower succesfully created.",
+            "schema": {
+              "$ref": "#/definitions/borrowerCreateResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "accessToken": {
+      "type": "object",
+      "properties": {
+        "token_type": {
+          "type": "string",
+          "example": "Bearer"
+        },
+        "expires_in": {
+          "type": "integer",
+          "example": 31536000
+        },
+        "access_token": {
+          "type": "string"
+        },
+        "refresh_token": {
+          "type": "string"
+        }
+      }
+    },
+    "borrowerCreateResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1,
+          "description": "Newly created id of the borrower."
+        }
+      }
+    }
+  },
+  "host": "uat.crowd.funding.api.com",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ]
+}
